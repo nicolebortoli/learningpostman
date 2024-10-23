@@ -1,0 +1,30 @@
+name: Newman run
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  newman:
+    runs-on:  ubuntu-latest
+    steps:
+      - uses:  actions/checkout@v3
+
+      - name:  Create  dir for report
+        run:  |
+          mkdir testArtifacts
+
+      - name: Install Newman
+        run:  |
+          npm install -g newman
+          npm install -g newman-reporter-html
+
+      - name: Run test
+        run: newman run ServeRest.postman_collection -e ServeRest.postman_environment -r cli,htmlextra
+
+      - name:  Report
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: Reports
+          path: newman
+      
