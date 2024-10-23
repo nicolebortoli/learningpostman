@@ -1,4 +1,4 @@
-name: Newman run
+name: newman run
 
 on:
   push:
